@@ -60,8 +60,7 @@ with tf.Session(graph = madness) as session :
                             beta : float(open('NN/beta.txt', 'r').read().strip()),
                         }
 
-            if (total_games % (batch_size*summary_rate)) :
-
+            if (total_games % (batch_size*summary_rate)) == 0 :
                 _ , summary_fetch = session.run([train_op, summaries], feed_dict = feed_dict)
                 writer.add_summary(summary_fetch, total_games)
             else :

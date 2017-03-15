@@ -11,7 +11,7 @@ with madness.as_default() :
             with tf.name_scope('fc_1') :
                 W_1 = tf.Variable(tf.truncated_normal([num_features, fc_depth[0]], stddev = stddev ))
                 b_1 = tf.Variable(tf.zeros([fc_depth[0]]))
-                #tf.summary.histogram('W_1', W_1)
+                tf.summary.histogram('W_1', W_1)
                 tf.summary.histogram('b_1', b_1)
             with tf.name_scope('fc_2') :
                 W_2 = tf.Variable(tf.truncated_normal([fc_depth[0], fc_depth[1]], stddev = stddev ))
@@ -72,7 +72,7 @@ with madness.as_default() :
             xent = tf.nn.softmax_cross_entropy_with_logits(
                         logits = logits, labels = win_labels)
             cross_entropy = tf.reduce_mean(xent)
-            cost = cross_entropy + regularization
+            cost = cross_entropy #+ regularization
 
             train_op = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)
 
@@ -96,10 +96,10 @@ with madness.as_default() :
 
     with tf.name_scope('Summaries') :
         tf.summary.scalar('Regularization', regularization)
-        tf.summary.scalar('Cross_entropy_GD', cross_entropy)
+        tf.summary.scalar('Cross_entropy_during_GD', cross_entropy)
         tf.summary.scalar('Cost', cost)
-        tf.summary.scalar('beta', beta)
+        tf.summary.scalar('Regularization_beta', beta)
         tf.summary.scalar('Learning_rate', learning_rate)
-        tf.summary.scalar('Train_Cross_entropy', train_xent)
-        tf.summary.scalar('Valid_Cross_entropy', valid_xent)
+        tf.summary.scalar('Cross_entropy_Train', train_xent)
+        tf.summary.scalar('Cross_entropy_Valid', valid_xent)
         summaries = tf.summary.merge_all()
