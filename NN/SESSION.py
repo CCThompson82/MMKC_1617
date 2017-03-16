@@ -52,7 +52,7 @@ with tf.Session(graph = madness) as session :
         training_set_list = RgRes.index.tolist()
 
         while len(training_set_list) >= batch_size :
-            batch_X, batch_y, _ = prepare_batch(RgRes, training_set_list, batch_size)
+            batch_X, batch_y, _ = mad.prepare_batch(RgRes, training_set_list, batch_size)
 
             feed_dict = {   X : batch_X,
                             win_labels : batch_y,
